@@ -7,6 +7,7 @@ import os
 from django.shortcuts import render
 from django.template import loader
 
+from .models import Post
 
 def post_list(request):
     #현재 지역에 맞는 날짜&시간 객체 할당
@@ -46,17 +47,25 @@ def post_list(request):
     # 3번째 인수(선택)로 dict 전달
     # -> 템플릿파일의 경로에 있는 HTML파일을 가져와서 {{ 변수 }}와 같은 부분들에 동적으로 문자열을 생성
     # 생성된 결과를 HttpResponse로 돌려줌, 브라우저는 해당 결과를 받아 사용자에게 보여주게 됨
-    context = {
-        'name': '김대인',
-        'pokemon': random.choice(['피카츄', '파이리', '꼬부기'])
-    }
-    # return render(request, 'blog/post_list.html', context)
+    posts = Post.objects.order_by('-created_date')
+    # for i in posts:
+    #     titles = i.title
+    content = ''
+    content += '<ul>'
+    for post in posts:
+        content += f'<li>{post.title}</li>'
+    content += '</ul>'
 
+    context = {
+        'posts': content,
+        # 'titles': titles
+    }
+    return render(request, 'blog/post_list.html', context)
     # loader.get_template
     # template.render
     # HttpResponse(content)
-    return render(
-        request = request,
-        template_name = 'blog/post_list.html',
-        context = context,
-    )
+    # return render(
+    #     request = request,
+    #     template_name = 'blog/post_list.html',
+    #     context = context,
+    # )
