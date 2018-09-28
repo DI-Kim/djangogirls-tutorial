@@ -10,6 +10,10 @@
 <body>
     <h1>Post List</h1>
     <!--<p>{{ name }}</p>-->
-    {{ posts|safe }}
+    <ul>
+    {% for post in posts %}
+        <li>{{ post.title }}</li>
+    {% endfor %}
+    </ul>
 </body>
 </html>

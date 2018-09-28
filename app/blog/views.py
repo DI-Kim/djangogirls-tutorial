@@ -57,7 +57,7 @@ def post_list(request):
     content += '</ul>'
 
     context = {
-        'posts': content,
+        'posts': posts,
         # 'titles': titles
     }
     return render(request, 'blog/post_list.html', context)
