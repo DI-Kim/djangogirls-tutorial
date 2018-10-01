@@ -67,3 +67,29 @@ def post_create(request):
         return redirect('post-list')
     else:
         return render(request, 'blog/post_create.html')
+
+def post_update(request, pk):
+    # URL
+    # /posts/<pk>/update/
+
+    #Template
+    # blog/post_update.html
+
+    #템플릿은 post_create.html의 내용과 같으나
+    # input[name=title]과 textarea[name=text]의 내용을
+    # 매개변수의 'pk'에 해당하는 Post의 title, text속성으로 미리 채운 상태로 form을 렌더링
+    # -> context dict 에 'post'키에 해당하는 Post Instance를 담아서 보내 사용
+
+    #post_detail view에서
+    # 특정 pk의 Post를 가져와서 템플릿으로 전달
+    # 템플릿에서 전달받은 특정 Post를 사용
+
+    #post_create view에서
+    # form형태 보기
+    # input 속성의 기본값은 value
+    # textarea속성의 기본값은 열림/닫힘 태그 사이의 텍스트
+    post = Post.objects.get(id=pk)
+    context= {
+        'post': post,
+    }
+    return render(request, 'blog/post_update.html', context)

@@ -29,5 +29,6 @@ urlpatterns = [
     url(r'^posts/(?P<pk>\d+)/$', views.post_detail, name='post-detail'),
     #request가 오면
     # post_detail(request = request, pk = <그룹부분에 주어진 값>
-    url(r'^posts/create/$', views.post_create, name='post-create')
+    url(r'^posts/create/$', views.post_create, name='post-create'),
+    url(r'^posts/(?P<pk>\d+)/update/$', views.post_update, name='post-update'),
 ]
