@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2>포스트 수정하기</h2>
+<h2>포스트 [{{ post.title }}] 수정</h2>
 <form method="POST">
     {% csrf_token %}
     <div class="form-group">
@@ -13,6 +13,6 @@
         <label for="id-text">내용</label>
         <textarea name="text" class="form-control" rows="8" id="id-text">{{ post.text }}</textarea>
     </div>
-    <button type="submit" class="btn-lg btn-block">글 수정하기</butto>
+    <button type="submit" class="btn-lg btn-block">수정완료</butto>
 </form>
 {% endblock %}
