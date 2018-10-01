@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 
 from .models import Post
 
@@ -58,8 +59,11 @@ def post_create(request):
             title=title,
             text=text,
         )
-        next_path = '/blog-posts/'
-        return HttpResponseRedirect(next_path)
-        # return HttpResponse(f'제목: {post.title} <br>내용: {post.text}')
+        #  글 목록 페이지로 Redirect 응답을 보냄
+        # next_path = reverse('post-list')
+        # return HttpResponseRedirect(next_path)
+
+        # URL Name으로부터의 reverse과정이 추상화 되어있음
+        return redirect('post-list')
     else:
         return render(request, 'blog/post_create.html')
