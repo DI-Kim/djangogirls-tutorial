@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form>
+    <a href="{% url 'post-list' %}" class="btn btn-primary mb-2">글 목록</a>
+    <input name="title" class="w-100" placeholder="title">
+    <textarea name="text" class="w-100" rows="8" placeholder="content"></textarea>
+    <button type="submit" class="btn-lg btn-block">글 생성</button>
+</form>
+{% endblock %}
