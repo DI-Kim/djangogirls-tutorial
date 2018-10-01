@@ -2,7 +2,8 @@
 
 {% block content %}
 <h2>새 포스트 작성</h2>
-<form>
+<form method="POST">
+    {% csrf_token %}
     <div class="form-group">
         <label for="id-title">제목</label>
         <input name="title" class="form-control" type="text" id="id-title">

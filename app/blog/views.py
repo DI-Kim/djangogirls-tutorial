@@ -1,6 +1,4 @@
-import re
-
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .models import Post
@@ -38,4 +36,30 @@ def post_create(request):
     :param request:
     :return:
     """
-    return render(request, 'blog/post_create.html')
+    if request.method == 'POST':
+        #POST요청이 왔을 경우
+        # 새 글을 작성하고 원하는 페이지로 돌아가도록 함
+
+        # 데이터는 request.POST안에 있음
+        #HttpResponse를 돌려줌
+        # 제목: <제목데이터><br>내용: <내용데이터>
+        # 위 문자열을 가지고 response 돌려주기
+        title = request.POST['title']
+        text = request.POST['text']
+
+        # objects.create() 메서드를 사용해서
+        # 새 Post객체를 생성하며 DB에 저장 (create() 실행의 반환값은 'post'변수에 할당)
+        # title, text 는 request.POST에서 가져온 내용
+        # author는 request.user
+        # 리턴하는 결과는 같은 문자열이지만,
+        # 문자열을 생성할 때 만들어진 Post객체('post'변수)의 title 속성, text속성을 사용
+        post = Post.objects.create(
+            author=request.user,
+            title=title,
+            text=text,
+        )
+        next_path = '/blog-posts/'
+        return HttpResponseRedirect(next_path)
+        # return HttpResponse(f'제목: {post.title} <br>내용: {post.text}')
+    else:
+        return render(request, 'blog/post_create.html')
