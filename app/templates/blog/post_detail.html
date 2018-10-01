@@ -4,7 +4,7 @@
     <!--btn: 버튼모양 Base-->
     <!--btn-primary: primary타입 버튼 속성 지정-->
     <!--mb-2: margin-bottom-->
-    <a href="/" class="btn btn-primary mb-2">글 목록</a>
+    <a href="{% url 'post-list' %}" class="btn btn-primary mb-2">글 목록</a>
     <div class="card mb-2">
         <div class="card-body">
             <h5 class="card-title">{{ post.title }}</h5>
