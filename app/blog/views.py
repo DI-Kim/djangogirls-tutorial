@@ -1,14 +1,52 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 from .models import Post
 
 def post_list(request):
-    posts = Post.objects.order_by('-created_date')
+    #내가 한 것
+    # post_page = Post.objects.all().order_by('-created_date')
+    # paginator = Paginator(post_page, 5)  # Show 5 contacts per page
+    # page = request.GET.get('page', 1)
+    # cur_posts = paginator.page(page)
+    #강사님이 한 것
+    #생성일자 내림차순으로 정렬된 모든 Post 목록을 5개씩 나눌 paginator객체 생성
+    paginator = Paginator(
+        Post.objects.order_by('-created_date'),
+        5,
+    )
+    #GET parameter로 전달된 'page'의 값을 page변수에 할당
+    # 전달되지 않는다면 none이 할당됨
+    page = request.GET.get('page')
+    try:
+        #page변수가 가진 값에 해당하는 Page를
+        #Paginator에서 가져오기 위해 시도
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        #page변수가 정수가 아니어서 발생한 예외의 경우
+        posts = paginator.page(1)
+    except EmptyPage:
+        # page변수에 해당하는 Page에 내용이 없는경우
+        # (3페이지 까지만 가능한데 5페이지 호출 등)
+        # -> 무조건 마지막 페이지를 가져옴
+        posts = paginator.page(paginator.num_pages)
+
+    # 1. request.GET 에 'page'값이 전달됨
+    # 2. 전체 Post QuerySet을 사용해서 Paginator인스턴스를 생성, paginator변수에 할당
+    # 3. Paginator인스턴스의 '.page()'메서드를 호출, 호출 인수에 GET요청에 전달된 'page'값을 사용
+    # 4. .page()메서드 호출 결과를 cur_posts변수에 할당 (Page Instance)
+    # 5. posts변수를 템플릿으로 전달
+    # 6. Page Instance는 QuerySet과 같이 순회가능한 객체이며, 순회시 각 루프마다 해당 Post Instance를 돌려줌
+    #     post_list.html에서 해당 객체를 순회하도록 탬플릿을 구현
+    # 7. 템플릿에 '이전', '<현재페이지객체>', '다음' 링크를 생성
+
+    #이것때문에 씹혀서 내용이 제대로 안나왔음.
+    # posts = Post.objects.order_by('-created_date')
     context = {
         'posts': posts,
-        # 'titles': titles
+        # 'cur_posts': cur_posts
     }
     return render(request, 'blog/post_list.html', context)
 

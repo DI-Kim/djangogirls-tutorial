@@ -18,4 +18,70 @@
     </div>
     {% endfor %}
 
+    <nav>
+        <ul class="pagination">
+            {% if posts.has_previous %}
+            <li class="page-item">
+                <a href="?page={{ posts.previous_page_number }}"
+                   class="page-linke">이전</a>
+            </li>
+            {% endif %}
+            <li class="page-item active">
+                <span class="page-link">
+                    {{ posts.number }} of {{ posts.paginator.num_pages }}
+                </span>
+            </li>
+            {% if posts.has_next %}
+            <li class="page-item">
+                <a href="?page={{ posts.next_page_number }}"
+                   class="page-link">다음</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+
+
+
+
+
+
+
+<!--내가 한 것 !!!!!!!!!!!!!!!!!!!!!!!!!!!!-->
+    <!--{% for cur_post in cur_posts %}-->
+        <!--&lt;!&ndash;{# Each "cur_post" is a Cur_post model object. #}&ndash;&gt;-->
+        <!--&lt;!&ndash;{{ cur_post.full_name|upper }}&ndash;&gt;-->
+    <!--<div class="card mb-2">-->
+        <!--<div class="card-body">-->
+            <!--<h5 class="card-title"><a href="{% url 'post-detail' pk=cur_post.pk %}">{{ cur_post.pk }} / {{ cur_post.title }}</a></h5>-->
+            <!--<p class="card-text"><small class="text-muted">{{ cur_post.created_date }}</small></p>-->
+            <!--<p class="card-text">{{ cur_post.text|linebreaksbr|truncatechars:200 }}</p>-->
+
+            <!--<div>-->
+                <!--<div class="post-btn-container float-left">-->
+                    <!--<a href="{% url 'post-update' pk=cur_post.pk %}" class="btn btn-info">수정</a>-->
+                <!--</div>-->
+                <!--<p class="text-right text-muted">{{ cur_post.author }}</p>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--{% endfor %}-->
+
+    <!--<div class="pagination mb-2">-->
+        <!--<span class="step-links mx-auto">-->
+            <!--{% if cur_posts.has_previous %}-->
+                <!--<a href="?page=1">&laquo; first</a>-->
+                <!--<a href="?page={{ cur_posts.previous_page_number }}">prev.</a>-->
+            <!--{% endif %}-->
+
+            <!--<span class="current">-->
+                <!--{{ cur_posts.number }} of {{ cur_posts.paginator.num_pages }}-->
+            <!--</span>-->
+
+            <!--{% if cur_posts.has_next %}-->
+                <!--<a href="?page={{ cur_posts.next_page_number }}">next</a>-->
+                <!--<a href="?page={{ cur_posts.paginator.num_pages }}">last &raquo;</a>-->
+            <!--{% endif %}-->
+        <!--</span>-->
+    <!--</div>-->
+
 {% endblock %}
